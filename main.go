@@ -80,6 +80,7 @@ func fibonacciBack() {
 		defer mutex.Unlock()
 		FiboStore["Hitcount"]++
 		FiboStore["Position"] = newPosition
+		FiboStore["Current"] = newCurrent
 		FiboStore["Previous"] = newPrevious
 		FiboStore["Next"] = newNext
 
@@ -106,13 +107,13 @@ func fibonacciGo() {
 		newPosition = gfibonacci.Position + 1
 	}
 
-	newfibonacci := Fibonacci{
+	/*newfibonacci := Fibonacci{
 		Hitcount: gfibonacci.Hitcount + 1,
 		Position: newPosition,
 		Previous: newPrevious, //we moving back now
 		Current:  newCurrent,
 		Next:     newNext,
-	}
+	}*/
 
 	go func() {
 
@@ -120,44 +121,49 @@ func fibonacciGo() {
 		defer mutex.Unlock()
 		FiboStore["Hitcount"]++
 		FiboStore["Position"] = newPosition
+		FiboStore["Current"] = newCurrent
 		FiboStore["Previous"] = newPrevious
 		FiboStore["Next"] = newNext
 
 	}()
 
-	gfibonacci = newfibonacci
+	//gfibonacci = newfibonacci
 	//return current - previous
 }
 
 func previous(w http.ResponseWriter, r *http.Request) {
 	fibonacciBack()
 	//previous := gfibonacci.Previous
+	fib, _ := json.Marshal(FiboStore)
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(gfibonacci)
+	json.NewEncoder(w).Encode(fib)
 	//json.NewEncoder(w).Encode(previous)
 }
 
 func current(w http.ResponseWriter, r *http.Request) {
-	current := gfibonacci.Current
+	//current := gfibonacci.Current
+	//current := FiboStore["Current"]
+	fib, _ := json.Marshal(FiboStore)
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 	//json.NewEncoder(w).Encode(fib)
-	json.NewEncoder(w).Encode(current)
+	json.NewEncoder(w).Encode(fib)
 }
 
 func next(w http.ResponseWriter, r *http.Request) {
 	fibonacciGo()
 	//next := gfibonacci.Next
+	fib, _ := json.Marshal(FiboStore)
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(gfibonacci)
+	json.NewEncoder(w).Encode(fib)
 	//json.NewEncoder(w).Encode(next)
 }
 
 //reset restoes all information to zero
 func reset(w http.ResponseWriter, r *http.Request) {
-	newfibonacci := Fibonacci{
+	/*newfibonacci := Fibonacci{
 		Hitcount: gfibonacci.Hitcount + 1,
 		Position: 1,
 		Previous: 0, //we moving back now
@@ -165,7 +171,7 @@ func reset(w http.ResponseWriter, r *http.Request) {
 		Next:     1,
 	}
 	gfibonacci = newfibonacci
-	fib := gfibonacci
+	fib := gfibonacci*/
 
 	go func() {
 
@@ -178,7 +184,7 @@ func reset(w http.ResponseWriter, r *http.Request) {
 		FiboStore["Next"] = 1
 
 	}()
-
+	fib, _ := json.Marshal(FiboStore)
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(fib)
