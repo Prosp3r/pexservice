@@ -134,6 +134,8 @@ func fibonacciGo() {
 func previous(w http.ResponseWriter, r *http.Request) {
 	fibonacciBack()
 	//previous := gfibonacci.Previous
+	mutex.Lock()
+	defer mutex.Unlock()
 	fib, _ := json.Marshal(FiboStore)
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
@@ -144,6 +146,8 @@ func previous(w http.ResponseWriter, r *http.Request) {
 func current(w http.ResponseWriter, r *http.Request) {
 	//current := gfibonacci.Current
 	//current := FiboStore["Current"]
+	mutex.Lock()
+	defer mutex.Unlock()
 	fib, _ := json.Marshal(FiboStore)
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
@@ -154,6 +158,8 @@ func current(w http.ResponseWriter, r *http.Request) {
 func next(w http.ResponseWriter, r *http.Request) {
 	fibonacciGo()
 	//next := gfibonacci.Next
+	mutex.Lock()
+	defer mutex.Unlock()
 	fib, _ := json.Marshal(FiboStore)
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
@@ -184,6 +190,9 @@ func reset(w http.ResponseWriter, r *http.Request) {
 		FiboStore["Next"] = 1
 
 	}()
+
+	mutex.Lock()
+	defer mutex.Unlock()
 	fib, _ := json.Marshal(FiboStore)
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
@@ -224,6 +233,8 @@ func main() {
 func saveFibo() bool {
 
 	//recordString := strconv.FormatUint(gfibonacci.Hitcount, 10) + "," + strconv.FormatUint(gfibonacci.Position, 10) + "," + strconv.FormatUint(gfibonacci.Previous, 10) + "," + strconv.FormatUint(gfibonacci.Current, 10) + "," + strconv.FormatUint(gfibonacci.Next, 10)
+	mutex.Lock()
+	defer mutex.Unlock()
 	xrecordString := strconv.FormatUint(FiboStore["Hitcount"], 10) + "," + strconv.FormatUint(FiboStore["Position"], 10) + "," + strconv.FormatUint(FiboStore["Previous"], 10) + "," + strconv.FormatUint(FiboStore["Current"], 10) + "," + strconv.FormatUint(FiboStore["Next"], 10)
 	//toSave := []string{recordString} //no need for the slice
 	//finalOutput, err := endFormats.Convert(f)
