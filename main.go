@@ -17,13 +17,12 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"sync"
 
 	"github.com/gorilla/mux"
 )
 
-const (
-	port = ":8081"
-)
+var port = "8081"
 
 //Fibonacci -
 type Fibonacci struct {
@@ -34,6 +33,9 @@ type Fibonacci struct {
 	Next     uint64 `json:"next"`
 }
 
+//FiboStore -- Hold fibonacci data
+var FiboStore = make(map[string]uint64)
+var mutex = &sync.Mutex{}
 var gfibonacci Fibonacci //reachable and writable by all
 
 //failOnError is  single place to handle errors to reduces number of keystrokes per each error handling call.
@@ -72,14 +74,19 @@ func fibonacciBack() {
 	}
 	gfibonacci = newfibonacci
 	//return current - previous
+
+	go func() {
+		mutex.Lock()
+		defer mutex.Unlock()
+		FiboStore["Hitcount"]++
+		FiboStore["Position"] = newPosition
+		FiboStore["Previous"] = newPrevious
+		FiboStore["Next"] = newNext
+
+	}()
 }
 
-//fibonacciGo sets the next set of numbers in the sequence
-//0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 54
-//7540113804746346429
-//18446744073709551615
-//-6246583658587674878
-//previous: 4660046610375530309 current: 7540113804746346429 next: -6246583658587674878
+//fibonacciGo sets the next set of numbers in the sequence //0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 54
 func fibonacciGo() {
 	//backshift
 	var newPrevious uint64
@@ -106,6 +113,18 @@ func fibonacciGo() {
 		Current:  newCurrent,
 		Next:     newNext,
 	}
+
+	go func() {
+
+		mutex.Lock()
+		defer mutex.Unlock()
+		FiboStore["Hitcount"]++
+		FiboStore["Position"] = newPosition
+		FiboStore["Previous"] = newPrevious
+		FiboStore["Next"] = newNext
+
+	}()
+
 	gfibonacci = newfibonacci
 	//return current - previous
 }
@@ -147,6 +166,19 @@ func reset(w http.ResponseWriter, r *http.Request) {
 	}
 	gfibonacci = newfibonacci
 	fib := gfibonacci
+
+	go func() {
+
+		mutex.Lock()
+		defer mutex.Unlock()
+		FiboStore["Hitcount"]++
+		FiboStore["Position"] = 1
+		FiboStore["Previous"] = 0
+		FiboStore["Current"] = 0
+		FiboStore["Next"] = 1
+
+	}()
+
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(fib)
@@ -172,6 +204,11 @@ func main() {
 	router.HandleFunc("/reset", reset).Methods("GET")
 
 	//start serving handles
+
+	if len(os.Args) > 0 {
+		port = ":" + string(os.Args[1]) //strconv.Atoi(os.Args[1])
+	}
+
 	fmt.Printf("Starting server at port %s \n", port)
 	log.Fatal(http.ListenAndServe(port, router))
 
@@ -180,11 +217,13 @@ func main() {
 //save sequence to file
 func saveFibo() bool {
 
-	recordString := strconv.FormatUint(gfibonacci.Hitcount, 10) + "," + strconv.FormatUint(gfibonacci.Position, 10) + "," + strconv.FormatUint(gfibonacci.Previous, 10) + "," + strconv.FormatUint(gfibonacci.Current, 10) + "," + strconv.FormatUint(gfibonacci.Next, 10)
+	//recordString := strconv.FormatUint(gfibonacci.Hitcount, 10) + "," + strconv.FormatUint(gfibonacci.Position, 10) + "," + strconv.FormatUint(gfibonacci.Previous, 10) + "," + strconv.FormatUint(gfibonacci.Current, 10) + "," + strconv.FormatUint(gfibonacci.Next, 10)
+	xrecordString := strconv.FormatUint(FiboStore["Hitcount"], 10) + "," + strconv.FormatUint(FiboStore["Position"], 10) + "," + strconv.FormatUint(FiboStore["Previous"], 10) + "," + strconv.FormatUint(FiboStore["Current"], 10) + "," + strconv.FormatUint(FiboStore["Next"], 10)
 	//toSave := []string{recordString} //no need for the slice
 	//finalOutput, err := endFormats.Convert(f)
 	filename := "fibo.csv"
-	output := []byte(recordString)
+	//output := []byte(recordString)
+	output := []byte(xrecordString)
 	_, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY, 0644)
 	failOnError(err, "An error was encountered saving fibo to file")
 
@@ -233,6 +272,18 @@ func readFibo() (Fibonacci, error) {
 	}
 	//set global fibonacci
 	gfibonacci = fibonacci
+
+	go func() {
+
+		mutex.Lock()
+		defer mutex.Unlock()
+		FiboStore["Hitcount"]++
+		FiboStore["Position"] = uint64(line1)
+		FiboStore["Previous"] = uint64(line2)
+		FiboStore["Current"] = uint64(line3)
+		FiboStore["Next"] = uint64(line4)
+
+	}()
 
 	return fibonacci, nil
 }
