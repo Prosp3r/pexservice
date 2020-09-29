@@ -14,7 +14,7 @@ RestartSec=2
 startLimitIntervalSec=60
 
 WorkingDirectory=/home/prosper/pex/pexservice
-ExecStart=/home/prosper/pexservice/pexservice --name=foo
+ExecStart=/home/prosper/pexservice/pexservice 8080
 
 # make sure log directory exists and owned by syslog
 PermissionsStartOnly=true

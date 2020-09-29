@@ -18,6 +18,7 @@ import (
 	"os"
 	"strconv"
 	"sync"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -47,17 +48,19 @@ func failOnError(err error, msg string) {
 
 //fibonacci returns the next number in the sequence
 //0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 54
-func fibonacciBack() {
+func fibonacciBack() (uint64, error) {
 	//backshift
 	var newPrevious uint64
 	var newNext uint64
 	var newCurrent uint64
 	var newPosition uint64
-	if gfibonacci.Previous >= 1 {
-		newPrevious = gfibonacci.Current - gfibonacci.Previous
-		newCurrent = gfibonacci.Previous
-		newNext = gfibonacci.Current
-		newPosition = gfibonacci.Position - 1
+	mutex.Lock()
+	//if gfibonacci.Previous >= 1 {
+	if FiboStore["Previous"] >= 1 {
+		newPrevious = FiboStore["Current"] - FiboStore["Previous"]
+		newCurrent = FiboStore["Previous"]
+		newNext = FiboStore["Current"]
+		newPosition = FiboStore["Position"] - 1
 	} else {
 		newPrevious = 0 //gfibonacci.Previous
 		newPosition = 1
@@ -65,138 +68,117 @@ func fibonacciBack() {
 		newNext = newCurrent + 1
 	}
 
-	newfibonacci := Fibonacci{
-		Hitcount: gfibonacci.Hitcount + 1,
-		Position: newPosition,
-		Previous: newPrevious, //we moving back now
-		Current:  newCurrent,
-		Next:     newNext,
-	}
-	gfibonacci = newfibonacci
-	//return current - previous
+	FiboStore["Hitcount"]++
+	FiboStore["Position"] = newPosition
+	FiboStore["Current"] = newCurrent
+	FiboStore["Previous"] = newPrevious
+	FiboStore["Next"] = newNext
 
-	go func() {
-		mutex.Lock()
-		defer mutex.Unlock()
-		FiboStore["Hitcount"]++
-		FiboStore["Position"] = newPosition
-		FiboStore["Current"] = newCurrent
-		FiboStore["Previous"] = newPrevious
-		FiboStore["Next"] = newNext
-
-	}()
+	mutex.Unlock()
+	return newPrevious, nil
 }
 
 //fibonacciGo sets the next set of numbers in the sequence //0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 54
-func fibonacciGo() {
+func fibonacciGo() (uint64, error) {
 	//backshift
 	var newPrevious uint64
 	var newNext uint64
 	var newCurrent uint64
 	var newPosition uint64
-	if gfibonacci.Current <= 0 {
+	mutex.Lock()
+	//if gfibonacci.Current <= 0 {
+	if FiboStore["Current"] <= 0 {
 		newPrevious = 0 //gfibonacci.Previous
 		newPosition = 1
 		newCurrent = newPrevious + 1
 		newNext = newCurrent + newPrevious
 	} else {
 
-		newPrevious = gfibonacci.Current
-		newCurrent = gfibonacci.Next
+		newPrevious = FiboStore["Current"]
+		newCurrent = FiboStore["Next"]
 		newNext = newCurrent + newPrevious
-		newPosition = gfibonacci.Position + 1
+		newPosition = FiboStore["Position"] + 1
 	}
 
-	/*newfibonacci := Fibonacci{
-		Hitcount: gfibonacci.Hitcount + 1,
-		Position: newPosition,
-		Previous: newPrevious, //we moving back now
-		Current:  newCurrent,
-		Next:     newNext,
-	}*/
+	//for {
 
-	go func() {
+	//go func() {
 
-		mutex.Lock()
-		defer mutex.Unlock()
-		FiboStore["Hitcount"]++
-		FiboStore["Position"] = newPosition
-		FiboStore["Current"] = newCurrent
-		FiboStore["Previous"] = newPrevious
-		FiboStore["Next"] = newNext
+	FiboStore["Hitcount"]++
+	FiboStore["Position"] = newPosition
+	FiboStore["Current"] = newCurrent
+	FiboStore["Previous"] = newPrevious
+	FiboStore["Next"] = newNext
+	//go func(){
+	//saveFibo(FiboStore)
+	//}()
+	mutex.Unlock()
 
-	}()
+	//}()
+	return newCurrent, nil
+	//}
+}
 
-	//gfibonacci = newfibonacci
-	//return current - previous
+//next - reads and relays the next number of the fibonacci
+func next(w http.ResponseWriter, r *http.Request) {
+
+	next, err := fibonacciGo()
+	failOnError(err, "Failed to increment the fibonacci")
+
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(next)
 }
 
 func previous(w http.ResponseWriter, r *http.Request) {
-	fibonacciBack()
-	//previous := gfibonacci.Previous
-	mutex.Lock()
-	defer mutex.Unlock()
-	fib, _ := json.Marshal(FiboStore)
+	previous, err := fibonacciBack()
+	failOnError(err, "Failed to decrement the fibonacci")
+
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(fib)
-	//json.NewEncoder(w).Encode(previous)
+	json.NewEncoder(w).Encode(previous)
 }
 
+//current reads and relays the current state of the fibonacci
 func current(w http.ResponseWriter, r *http.Request) {
-	//current := gfibonacci.Current
-	//current := FiboStore["Current"]
+
 	mutex.Lock()
-	defer mutex.Unlock()
-	fib, _ := json.Marshal(FiboStore)
+	fib, _ := json.Marshal(FiboStore["Current"])
+	mutex.Unlock()
+	xfib, _ := strconv.ParseUint(string(fib), 0, 64)
+	//fmt.Println(FiboStore)
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 	//json.NewEncoder(w).Encode(fib)
-	json.NewEncoder(w).Encode(fib)
-}
-
-func next(w http.ResponseWriter, r *http.Request) {
-	fibonacciGo()
-	//next := gfibonacci.Next
-	mutex.Lock()
-	defer mutex.Unlock()
-	fib, _ := json.Marshal(FiboStore)
-	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(fib)
-	//json.NewEncoder(w).Encode(next)
+	json.NewEncoder(w).Encode(xfib)
 }
 
 //reset restoes all information to zero
 func reset(w http.ResponseWriter, r *http.Request) {
-	/*newfibonacci := Fibonacci{
-		Hitcount: gfibonacci.Hitcount + 1,
-		Position: 1,
-		Previous: 0, //we moving back now
-		Current:  0,
-		Next:     1,
-	}
-	gfibonacci = newfibonacci
-	fib := gfibonacci*/
 
-	go func() {
-
-		mutex.Lock()
-		defer mutex.Unlock()
-		FiboStore["Hitcount"]++
-		FiboStore["Position"] = 1
-		FiboStore["Previous"] = 0
-		FiboStore["Current"] = 0
-		FiboStore["Next"] = 1
-
-	}()
+	//go func() {
 
 	mutex.Lock()
-	defer mutex.Unlock()
+
+	FiboStore["Hitcount"]++
+	FiboStore["Position"] = 1
+	FiboStore["Previous"] = 0
+	FiboStore["Current"] = 0
+	FiboStore["Next"] = 1
+
+	//mutex.Unlock()
+
+	//}()
+	//saveFibo()
+
+	//mutex.Lock()
 	fib, _ := json.Marshal(FiboStore)
+	mutex.Unlock()
+	//xfib, _ := strconv.ParseUint(string(fib), 0, 64)
+	//fmt.Printf("%v", FiboStore["Position"])
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(fib)
+	json.NewEncoder(w).Encode(string(fib))
 }
 
 func homepage(w http.ResponseWriter, r *http.Request) {
@@ -208,6 +190,17 @@ func main() {
 	//Read data (csv)store into memory
 	_, err := readFibo()
 	failOnError(err, "Could not read csv file store")
+	//start the fibonacci saving process
+	go saveFibo()
+	//catch signals
+	sigs := make(chan os.Signal, 1)
+	go func() {
+		s := <-sigs
+		log.Printf("Received terminate signal: %s", s)
+		appCleanup()
+		os.Exit(1)
+	}()
+
 	//Start Gorrila mux
 	router := mux.NewRouter()
 	//All crud handlers that will be needed by front ends will be defined and handled here.
@@ -230,27 +223,34 @@ func main() {
 }
 
 //save sequence to file
-func saveFibo() bool {
-
-	//recordString := strconv.FormatUint(gfibonacci.Hitcount, 10) + "," + strconv.FormatUint(gfibonacci.Position, 10) + "," + strconv.FormatUint(gfibonacci.Previous, 10) + "," + strconv.FormatUint(gfibonacci.Current, 10) + "," + strconv.FormatUint(gfibonacci.Next, 10)
-	mutex.Lock()
-	defer mutex.Unlock()
-	xrecordString := strconv.FormatUint(FiboStore["Hitcount"], 10) + "," + strconv.FormatUint(FiboStore["Position"], 10) + "," + strconv.FormatUint(FiboStore["Previous"], 10) + "," + strconv.FormatUint(FiboStore["Current"], 10) + "," + strconv.FormatUint(FiboStore["Next"], 10)
-	//toSave := []string{recordString} //no need for the slice
-	//finalOutput, err := endFormats.Convert(f)
+func saveFibo() {
+	//fmt.Println("Asked to save")
 	filename := "fibo.csv"
-	//output := []byte(recordString)
-	output := []byte(xrecordString)
-	_, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY, 0644)
-	failOnError(err, "An error was encountered saving fibo to file")
+	fmt.Printf("Saving fibonacci state to %v \n", filename)
+	for {
+		//mutex.Lock()
+		f := FiboStore
+		//mutex.Unlock()
 
-	err = ioutil.WriteFile(filename, output, 0644)
-	fmt.Printf("File saved to %v \n", filename)
-	return true
+		//recordString := strconv.FormatUint(gfibonacci.Hitcount, 10) + "," + strconv.FormatUint(gfibonacci.Position, 10) + "," + strconv.FormatUint(gfibonacci.Previous, 10) + "," + strconv.FormatUint(gfibonacci.Current, 10) + "," + strconv.FormatUint(gfibonacci.Next, 10)
+
+		xrecordString := strconv.FormatUint(f["Hitcount"], 10) + "," + strconv.FormatUint(f["Position"], 10) + "," + strconv.FormatUint(f["Previous"], 10) + "," + strconv.FormatUint(f["Current"], 10) + "," + strconv.FormatUint(f["Next"], 10)
+
+		output := []byte(xrecordString)
+		mutex.Lock()
+		openFile, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY, 0644)
+		failOnError(err, "An error was encountered saving fibo to file")
+
+		err = ioutil.WriteFile(filename, output, 0644)
+		openFile.Close()
+		mutex.Unlock()
+		//fmt.Printf("File saved to %v \n", filename)
+		time.Sleep(time.Second)
+	}
 }
 
 //read json file
-func readFibo() (Fibonacci, error) {
+func readFibo() (map[string]uint64, error) {
 	dataFile, err := os.Open("fibo.csv")
 	failOnError(err, "Could not read fibo.csv")
 
@@ -265,22 +265,26 @@ func readFibo() (Fibonacci, error) {
 	//if err != nil {
 	//	fmt.Printf("Cannot read file: %v following error occured: %v \n", fileSource, err.Error())
 	//}
-	line0, err := strconv.Atoi(line[0])
+	//line0, err := strconv.Atoi(line[0])
+	line0, err := strconv.ParseUint(string(line[0]), 0, 64)
 	failOnError(err, "Could not read or convert to int")
 
-	line1, err := strconv.Atoi(line[1])
+	line1, err := strconv.ParseUint(string(line[1]), 0, 64)
 	failOnError(err, "Could not read or convert to int")
 
-	line2, err := strconv.Atoi(line[2])
+	//line2, err := strconv.Atoi(line[2])
+	line2, err := strconv.ParseUint(string(line[2]), 0, 64)
 	failOnError(err, "Could not read or convert to int")
 
-	line3, err := strconv.Atoi(line[3])
+	//line3, err := strconv.Atoi(line[3])
+	line3, err := strconv.ParseUint(string(line[3]), 0, 64)
 	failOnError(err, "Could not read or convert to int")
 
-	line4, err := strconv.Atoi(line[4])
+	//line4, err := strconv.Atoi(line[4])
+	line4, err := strconv.ParseUint(string(line[4]), 0, 64)
 	failOnError(err, "Could not read or convert to int")
 
-	fibonacci := Fibonacci{
+	/*fibonacci := Fibonacci{
 		Hitcount: uint64(line0),
 		Position: uint64(line1),
 		Previous: uint64(line2),
@@ -288,19 +292,27 @@ func readFibo() (Fibonacci, error) {
 		Next:     uint64(line4),
 	}
 	//set global fibonacci
-	gfibonacci = fibonacci
+	gfibonacci = fibonacci*/
 
 	go func() {
 
 		mutex.Lock()
-		defer mutex.Unlock()
-		FiboStore["Hitcount"]++
+
+		FiboStore["Hitcount"] = uint64(line0)
 		FiboStore["Position"] = uint64(line1)
 		FiboStore["Previous"] = uint64(line2)
 		FiboStore["Current"] = uint64(line3)
 		FiboStore["Next"] = uint64(line4)
 
+		mutex.Unlock()
+
 	}()
 
-	return fibonacci, nil
+	return FiboStore, nil
+}
+
+func appCleanup() {
+	log.Println("Cleaning up before exit")
+	saveFibo()
+	os.Exit(1)
 }
