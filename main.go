@@ -24,7 +24,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var port = "8081"
+var port = ":8081"
 
 //Fibonacci -
 type Fibonacci struct {
@@ -299,9 +299,11 @@ func main() {
 	//router.Use(loggingMiddleware)
 	//start serving handles
 
-	if len(os.Args) > 0 {
-		port = ":" + string(os.Args[1]) //strconv.Atoi(os.Args[1])
-	}
+	//if len(os.Args) < 1 {
+	//	port = ":" + string(os.Args[1]) //strconv.Atoi(os.Args[1])
+	//} else {
+	//	port = ":8080"
+	//}
 
 	fmt.Printf("Starting server at port %s \n", port)
 	log.Fatal(http.ListenAndServe(port, router))

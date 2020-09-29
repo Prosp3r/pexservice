@@ -4,6 +4,8 @@ RUN apk add git
 RUN mkdir /app
 ADD . /app
 WORKDIR /app
-RUN go build -o main pexservice
-EXPOSE 8080
-CMD ["./app/main 8080"]
+RUN ls -aslt
+RUN go build -o pexservice
+RUN ls -aslt /app
+EXPOSE 8081
+CMD ["/app/pexservice"]
