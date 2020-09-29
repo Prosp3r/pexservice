@@ -12,6 +12,7 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -186,41 +187,8 @@ func homepage(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, " You reached my fibonacci /homepage \n\n The hits parameter is a traffic hit counter for some easy hit load tracking \n\n The position parameter is your current position on the fibonacci scale \n\n Try the following end points \n /previous to view previous number \n /current to view the current number \n /next to view the next number \n /reset to reset the fibonacci to zero \n ")
 }
 
-func main() {
-	//Read data (csv)store into memory
-	_, err := readFibo()
-	failOnError(err, "Could not read csv file store")
-	//start the fibonacci saving process
-	go saveFibo()
-	//catch signals
-	sigs := make(chan os.Signal, 1)
-	go func() {
-		s := <-sigs
-		log.Printf("Received terminate signal: %s", s)
-		appCleanup()
-		os.Exit(1)
-	}()
-
-	//Start Gorrila mux
-	router := mux.NewRouter()
-	//All crud handlers that will be needed by front ends will be defined and handled here.
-	//User activity
-	router.HandleFunc("/", homepage).Methods("GET")
-	router.HandleFunc("/previous", previous).Methods("GET")
-	router.HandleFunc("/current", current).Methods("GET")
-	router.HandleFunc("/next", next).Methods("GET")
-	router.HandleFunc("/reset", reset).Methods("GET")
-
-	//start serving handles
-
-	if len(os.Args) > 0 {
-		port = ":" + string(os.Args[1]) //strconv.Atoi(os.Args[1])
-	}
-
-	fmt.Printf("Starting server at port %s \n", port)
-	log.Fatal(http.ListenAndServe(port, router))
-
-}
+//basicRateHandler - could be implemented as a rate limiter with parameters set on server startup or pre-set default.
+func basicRateHandler() { /*TODO*/ }
 
 //save sequence to file
 func saveFibo() {
@@ -228,9 +196,8 @@ func saveFibo() {
 	filename := "fibo.csv"
 	fmt.Printf("Saving fibonacci state to %v \n", filename)
 	for {
-		//mutex.Lock()
+
 		f := FiboStore
-		//mutex.Unlock()
 
 		//recordString := strconv.FormatUint(gfibonacci.Hitcount, 10) + "," + strconv.FormatUint(gfibonacci.Position, 10) + "," + strconv.FormatUint(gfibonacci.Previous, 10) + "," + strconv.FormatUint(gfibonacci.Current, 10) + "," + strconv.FormatUint(gfibonacci.Next, 10)
 
@@ -250,18 +217,29 @@ func saveFibo() {
 }
 
 //read json file
-func readFibo() (map[string]uint64, error) {
+//func readFibo() (map[string]uint64, error) {
+func readFibo() {
 	dataFile, err := os.Open("fibo.csv")
-	failOnError(err, "Could not read fibo.csv")
+	if err != nil {
+		fmt.Println("Could not find fibo.csv creating...")
+		saveFibo()
+		time.After(time.Second / 10)
+		//readFibo()
+	}
+	//failOnError(err, "Could not read fibo.csv")
 
 	reader := csv.NewReader(bufio.NewReader(dataFile))
-
 	line, err := reader.Read()
-	failOnError(err, "Cannot read file")
+	//failOnError(err, "Cannot read file")
 	//check for end of file
-	//if err == io.EOF {
-	//	break
-	//}
+	if err == io.EOF {
+		fmt.Println("Empty structureless fibo.csv found. Re-creating...")
+		saveFibo()
+		time.After(time.Second / 10)
+		readFibo()
+		//break
+	}
+
 	//if err != nil {
 	//	fmt.Printf("Cannot read file: %v following error occured: %v \n", fileSource, err.Error())
 	//}
@@ -284,16 +262,6 @@ func readFibo() (map[string]uint64, error) {
 	line4, err := strconv.ParseUint(string(line[4]), 0, 64)
 	failOnError(err, "Could not read or convert to int")
 
-	/*fibonacci := Fibonacci{
-		Hitcount: uint64(line0),
-		Position: uint64(line1),
-		Previous: uint64(line2),
-		Current:  uint64(line3),
-		Next:     uint64(line4),
-	}
-	//set global fibonacci
-	gfibonacci = fibonacci*/
-
 	go func() {
 
 		mutex.Lock()
@@ -308,7 +276,36 @@ func readFibo() (map[string]uint64, error) {
 
 	}()
 
-	return FiboStore, nil
+	//return FiboStore, nil
+}
+
+func main() {
+	//Read data (csv)store into memory
+	go readFibo()
+	//failOnError(err, "Could not read csv file store")
+	//start the fibonacci saving process
+	go saveFibo()
+
+	//Start Gorrila mux
+	router := mux.NewRouter()
+	//All crud handlers that will be needed by front ends will be defined and handled here.
+	//User activity
+	//http.HandleFunc("/", homepage)
+	router.HandleFunc("/", homepage).Methods("GET")
+	router.HandleFunc("/previous", previous).Methods("GET")
+	router.HandleFunc("/current", current).Methods("GET")
+	router.HandleFunc("/next", next).Methods("GET")
+	router.HandleFunc("/reset", reset).Methods("GET")
+	//router.Use(loggingMiddleware)
+	//start serving handles
+
+	if len(os.Args) > 0 {
+		port = ":" + string(os.Args[1]) //strconv.Atoi(os.Args[1])
+	}
+
+	fmt.Printf("Starting server at port %s \n", port)
+	log.Fatal(http.ListenAndServe(port, router))
+
 }
 
 func appCleanup() {
