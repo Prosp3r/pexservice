@@ -14,6 +14,17 @@
 
 - Gitclone this repo and run the binary ./pexservice
 
+To setup as daemon
+RUN The following
+$ cd /tmp
+$ sudo useradd pexservice -s /sbin/nologin -M
+$ sudo mv /home/ubuntu/pexservice/pexservice.service /lib/systemd/system/.
+$ sudo chmod 755 /lib/systemd/system/pexservice.service
+
+$ sudo systemctl enable pexservice.service
+$ sudo systemctl start pexservice
+
+$ sudo journalctl -f -u pexservice
 
 OR
 

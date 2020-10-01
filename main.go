@@ -218,12 +218,13 @@ func saveFibo() {
 
 //read json file
 //func readFibo() (map[string]uint64, error) {
-func readFibo() {
+func readFibo() (string, error) {
 	dataFile, err := os.Open("fibo.csv")
 	if err != nil {
 		fmt.Println("Could not find fibo.csv creating...")
-		saveFibo()
-		time.After(time.Second / 10)
+		//saveFibo()
+		//time.After(time.Second / 10)
+		return "Failed", err
 		//readFibo()
 	}
 	//failOnError(err, "Could not read fibo.csv")
@@ -234,10 +235,11 @@ func readFibo() {
 	//check for end of file
 	if err == io.EOF {
 		fmt.Println("Empty structureless fibo.csv found. Re-creating...")
-		saveFibo()
-		time.After(time.Second / 10)
-		readFibo()
+		//saveFibo()
+		//time.After(time.Second / 10)
+		//readFibo()
 		//break
+		return "Failed", err
 	}
 
 	//if err != nil {
@@ -276,15 +278,22 @@ func readFibo() {
 
 	}()
 
-	//return FiboStore, nil
+	return "Success", nil
 }
 
 func main() {
 	//Read data (csv)store into memory
-	go readFibo()
+	read, err := readFibo()
+	if err != nil {
+		//read failed
+		go saveFibo()
+	}
+
+	if read == "Success" {
+		go saveFibo()
+	}
 	//failOnError(err, "Could not read csv file store")
 	//start the fibonacci saving process
-	go saveFibo()
 
 	//Start Gorrila mux
 	router := mux.NewRouter()
