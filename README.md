@@ -19,9 +19,10 @@ Any Linux box with Go installed
 
 To setup as user ubuntu
 
-  RUN The following
-  $ cd /home/ubuntu/
-  $ sudo make all
+RUN The following
+
+  - $ cd /home/ubuntu/
+  - $ sudo make all
 
 OR
 
