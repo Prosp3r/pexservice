@@ -19,13 +19,19 @@ makedir:
 	#@if [ ! -d $(BUILDPATH)/bin ] ; then mkdir -p $(BUILDPATH)/bin ; fi
 
 get:
-	#$(GOGET) github.com/gorilla/mux
+	$(GOGET) github.com/gorilla/mux
 
 #build:
 #	$(GOINSTALL) $(EXENAME)
 build:
 	#sudo useradd pexservice -s /sbin/nologin -M
-	sudo useradd {pexservice -s /sbin/nologin -M} || echo "User already exists."
+	if grep "${EXENAME}" /etc/passwd >/dev/null 2>&1; then \
+		echo "User pexservice already exist"; \
+	else \
+		sudo useradd pexservice -s /sbin/nologin -M; \
+	fi
+
+	#sudo useradd {pexservice -s /sbin/nologin -M} || echo "User already exists."
 	@echo "Creating service working directory"
 	sudo /bin/mkdir -p pexservice
 	sudo /bin/chown pexservice:adm pexservice
