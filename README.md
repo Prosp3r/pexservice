@@ -10,11 +10,14 @@
   - /
   Each end point will return the curresponding fibonacci sequence for the current entry position
 
+## Requirements
+Any Linux box with Go installed
+
 ## Installation
 
-- Gitclone this repo and run the binary ./pexservice
+- Gitclone this repo and run the binary to home directory of user [ubuntu]
 
-To setup, login as user ubuntu
+To setup as user ubuntu
 RUN The following
 $ cd /home/ubuntu/
 $ sudo make all
@@ -34,10 +37,10 @@ On Kubernetes or other Orchestration systems.
   - docker container deployment on Kubernetes cluster
   - Systemd
 
-## Achieving 
+## Achieving 1k requests and above. 
 This one is a bit tricky.
 The best way to eliminate restrictions placed by operating systems and network interfaces is to run tests from localhost.
-Tweak/Increse ip_local_port_range parameters on clients.
+Or Increase the maximum number of TCP IP connections allowed in linux.
 
 
 Included are various screenshots of Apache bench tests.
@@ -46,3 +49,8 @@ On DigitalOcean with 8GB Ram and 4 CPUS it handled 8492 requests per secodn with
 Results are significantly better but vary on non write end points.
 
 See test_shots folder for examples screen shots of Apache bench tests.
+
+![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.34.58%20PM.png)
+![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.34.42%20PM.png)
+![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.35.32%20PM.png)
+
