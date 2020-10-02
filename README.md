@@ -18,9 +18,10 @@ Any Linux box with Go installed
 - Gitclone this repo and run the binary to home directory of user [ubuntu]
 
 To setup as user ubuntu
-RUN The following
-$ cd /home/ubuntu/
-$ sudo make all
+
+  RUN The following
+  $ cd /home/ubuntu/
+  $ sudo make all
 
 OR
 
@@ -35,7 +36,7 @@ On Kubernetes or other Orchestration systems.
 ## Keep Alive
 - KeepAlive feature is achieved with
   - docker container deployment on Kubernetes cluster
-  - Systemd
+  - Systemd daemon 
 
 ## Achieving 1k requests and above. 
 This one is a bit tricky.
