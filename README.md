@@ -27,7 +27,7 @@ RUN The following
 
 OR
 
-On Kubernetes or other Orchestration systems.
+On use the docker image that could also run on Kubernetes or other Orchestration systems.
 - docker run -d -p 8081:8081  sirpros/pexservice:v1.1
   - Keepalive for this is possible through Kubernetes cluster.
   - Load performance on a single docker container vary depending on the docker host system capacity, requests throughput of between 560 to 9811 requests/second are achieved well for both non-write/read and write/read endpoints. 
