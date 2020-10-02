@@ -8,7 +8,7 @@ GOGET=$(GO) get
 
 EXENAME=pexservice
 FILE=/lib/systemd/system/pexservice.service
-HOMESERVICEFILE=/home/ubuntu/pexservice.service
+HOMESERVICEFILE=/home/ubuntu/pexservice/pexservice.service
 #export GOPATH=$(CURDIR)
 
 myname:

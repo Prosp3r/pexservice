@@ -1,6 +1,6 @@
 [Unit]
 Description=Pex service
-ConditionPathExists=/home/ubuntu/pexservice
+ConditionPathExists=/home/ubuntu/pexservice/pexservice
 After=network.target
 
 [Service]
@@ -13,8 +13,8 @@ Restart=always
 RestartSec=10
 startLimitIntervalSec=60
 
-WorkingDirectory=/home/ubuntu/pexservice
-ExecStart=/home/ubuntu/pexservice/pexservice
+WorkingDirectory=/home/ubuntu/pexservice/pexservice
+ExecStart=/home/ubuntu/pexservice/pexservice/pexservice
 
 # make sure log directory exists and owned by syslog
 PermissionsStartOnly=true

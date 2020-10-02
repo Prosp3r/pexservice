@@ -19,10 +19,11 @@ Any Linux box with Go installed
 To setup as user ubuntu
 
 - Unzip or Gitclone this repo and run the binary to home directory of user [ubuntu]
+- git clone https://github.com/Prosp3r/pexservice.git
 
 RUN The following
 
-  - $ cd /home/ubuntu/
+  - $ cd /home/ubuntu/pexservice/
   - $ sudo make all
 
 OR
