@@ -15,9 +15,10 @@ Any Linux box with Go installed
 
 ## Installation
 
-- Gitclone this repo and run the binary to home directory of user [ubuntu]
 
 To setup as user ubuntu
+
+- Unzip or Gitclone this repo and run the binary to home directory of user [ubuntu]
 
 RUN The following
 
