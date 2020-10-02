@@ -19,7 +19,9 @@ makedir:
 	#@if [ ! -d $(BUILDPATH)/bin ] ; then mkdir -p $(BUILDPATH)/bin ; fi
 
 get:
-	$(GOGET) github.com/gorilla/mux
+	sudo apt install golang-go
+	go get github.com/gorilla/mux
+	#$(GOGET) github.com/gorilla/mux
 
 #build:
 #	$(GOINSTALL) $(EXENAME)
