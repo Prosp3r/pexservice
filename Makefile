@@ -24,6 +24,8 @@ get:
 #build:
 #	$(GOINSTALL) $(EXENAME)
 build:
+	#sudo useradd pexservice -s /sbin/nologin -M
+	sudo useradd {pexservice -s /sbin/nologin -M} || echo "User already exists."
 	@echo "Creating service working directory"
 	sudo /bin/mkdir -p pexservice
 	sudo /bin/chown pexservice:adm pexservice
@@ -39,8 +41,6 @@ movefiles:
 	cd /tmp
 	@echo "creating OS user..."
 
-	#sudo useradd pexservice -s /sbin/nologin -M
-	sudo useradd {pexservice -s /sbin/nologin -M} || echo "User already exists."
 	@echo "Creating log file"
 	sudo /bin/mkdir -p /var/log/pexservice
 	sudo /bin/chown syslog:adm /var/log/pexservice
