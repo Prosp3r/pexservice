@@ -33,3 +33,16 @@ On Kubernetes or other Orchestration systems.
 - KeepAlive feature is achieved with
   - docker container deployment on Kubernetes cluster
   - Systemd
+
+## Achieving 
+This one is a bit tricky.
+The best way to eliminate restrictions placed by operating systems and network interfaces is to run tests from localhost.
+Tweak/Increse ip_local_port_range parameters on clients.
+
+
+Included are various screenshots of Apache bench tests.
+On 512MiB Ram 1 CPU on AWS without restrictions on Packet rates, this API's throughput was 4511/requests per second with zero errors on read/write endpoint.
+On DigitalOcean with 8GB Ram and 4 CPUS it handled 8492 requests per secodn with zero error on read/write endpoint.
+Results are significantly better but vary on non write end points.
+
+See test_shots folder for examples screen shots of Apache bench tests.

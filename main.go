@@ -217,15 +217,11 @@ func saveFibo() {
 }
 
 //read json file
-//func readFibo() (map[string]uint64, error) {
 func readFibo() (string, error) {
 	dataFile, err := os.Open("fibo.csv")
 	if err != nil {
 		fmt.Println("Could not find fibo.csv creating...")
-		//saveFibo()
-		//time.After(time.Second / 10)
 		return "Failed", err
-		//readFibo()
 	}
 	//failOnError(err, "Could not read fibo.csv")
 
@@ -235,16 +231,9 @@ func readFibo() (string, error) {
 	//check for end of file
 	if err == io.EOF {
 		fmt.Println("Empty structureless fibo.csv found. Re-creating...")
-		//saveFibo()
-		//time.After(time.Second / 10)
-		//readFibo()
-		//break
 		return "Failed", err
 	}
 
-	//if err != nil {
-	//	fmt.Printf("Cannot read file: %v following error occured: %v \n", fileSource, err.Error())
-	//}
 	//line0, err := strconv.Atoi(line[0])
 	line0, err := strconv.ParseUint(string(line[0]), 0, 64)
 	failOnError(err, "Could not read or convert to int")
@@ -299,20 +288,11 @@ func main() {
 	router := mux.NewRouter()
 	//All crud handlers that will be needed by front ends will be defined and handled here.
 	//User activity
-	//http.HandleFunc("/", homepage)
 	router.HandleFunc("/", homepage).Methods("GET")
 	router.HandleFunc("/previous", previous).Methods("GET")
 	router.HandleFunc("/current", current).Methods("GET")
 	router.HandleFunc("/next", next).Methods("GET")
 	router.HandleFunc("/reset", reset).Methods("GET")
-	//router.Use(loggingMiddleware)
-	//start serving handles
-
-	//if len(os.Args) < 1 {
-	//	port = ":" + string(os.Args[1]) //strconv.Atoi(os.Args[1])
-	//} else {
-	//	port = ":8080"
-	//}
 
 	fmt.Printf("Starting server at port %s \n", port)
 	log.Fatal(http.ListenAndServe(port, router))
