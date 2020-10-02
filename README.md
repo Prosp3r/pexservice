@@ -59,3 +59,9 @@ See test_shots folder for examples screen shots of Apache bench tests.
 ![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.34.42%20PM.png)
 ![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.35.32%20PM.png)
 
+## Testing with Apache Bench
+  - Install Apache bench
+    $ sudo apt install apache2-utils
+    $ ab -c 10 -n 10000 -r http://localhost:8081/
+  The above command sends ten thousand hits at 10 concurrent connections to the / endpoint
+
