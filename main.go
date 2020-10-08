@@ -27,18 +27,19 @@ import (
 var port = ":8081"
 
 //Fibonacci -
-type Fibonacci struct {
+/*type Fibonacci struct {
 	Hitcount uint64 `json:"hits"`
 	Position uint64 `json:"postion"`
 	Previous uint64 `json:"previous"`
 	Current  uint64 `json:"current"`
 	Next     uint64 `json:"next"`
-}
+}*/
 
 //FiboStore -- Hold fibonacci data
 var FiboStore = make(map[string]uint64)
 var mutex = &sync.Mutex{}
-var gfibonacci Fibonacci //reachable and writable by all
+
+//var gfibonacci Fibonacci //reachable and writable by all
 
 //failOnError is  single place to handle errors to reduces number of keystrokes per each error handling call.
 func failOnError(err error, msg string) {
