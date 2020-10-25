@@ -31,6 +31,20 @@ This API has five end points. I've describe what each endpoint does in the table
 </table>
 
 
+#### System Flow
+
+![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.34.58%20PM.png)
+
+1. When the service is started, it reads the previous calculations from the `.csv` file store and sets it in memory.
+2. It then starts a Go routine that keeps updateing the `.csv` store with changes to the in-memory store independent of the main program.
+3. The service also starts a http server using the gorrilla mux package that listens for request on all endpoints.
+4. When requests come in through any of the endpoints, a claculation is made where necessary and the results stored in the in-memory store.
+5. To prevent read conflicts in the in-memory store, all reads and writes are protected with the sync package mutex lock function.
+
+
+
+
+
 
 #### Data Persistence
 Part of being resilient is expecting the worst and planning for it when designing the software.
