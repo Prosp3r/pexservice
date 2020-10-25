@@ -1,6 +1,13 @@
-# Fibonacci Sequence Challenge
+# PEX Service 
 
-* API will handle over ~6k requests per second on a 512MiB 1 Core Linux Box
+## Introduction
+PexService API is as an example of a resillient, high throughput API that can handle a fairly substantial number of api requests per second on a single linux server.
+
+
+## Goals
+The goal of this design is to showcase some of the capabilities of Go programming language in high load scenerio.
+Using the fibonacci sequence challenge as example workload, pex service will carry out thousands of calculations, persists or store the results as it goes and in the case of a crash, recover, and start from where it stoped.
+
 
 * This API has five end points
   - /current
