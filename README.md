@@ -51,6 +51,7 @@ In this document we are focused on the systemd daemon.
 ## Prerequisites
 + An Ubuntu linux server or VPS with minimum 512MiB and 1 Core CPU.
 + Command line prompt access to the Ubuntu server
+
   _A VPS could be gotten from any of the following._
   + [Amazon AWS](https://aws.amazon.com)
   + [DigitalOcean](https://digitalocean.com)
