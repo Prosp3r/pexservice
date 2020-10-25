@@ -17,7 +17,7 @@ After going through and carrying out the instructions in this document, you woul
 Using the fibonacci sequence challenge as example workload, pex service will carry out thousands of calculations, persists or store the results as it goes and in the case of a crash, recover, and start from where it stoped.
 
 
-* This API has five end points
+This API has five end points. I've describe what each endpoint does in the table below.
 
 <table> 
         <tr> <td> End Point </td><td> Function </td></tr>
@@ -28,15 +28,23 @@ Using the fibonacci sequence challenge as example workload, pex service will car
         <tr> <td> /reset </td><td> Resets the fibonacci number calculation to the begining </td></tr>        
 </table>
 
-  Each end point will return the curresponding fibonacci sequence for the current entry position
+
 
 #### Data Persistence
+Part of being resilient is expecting the worst and planning for it when designing the software.
+I decided to persist the calculations with as light a footprint as could be managed. 
+To do this, I save the calculations per time to a .csv file on the system.
+This way, in case the entire system crashes due to circumstances beyond our control all previous calculations are left intact and the system can pick up where it left off by loading the previous data from the .csv file.
 
 
 #### Keep Alive
-- KeepAlive feature is achieved with
-  - docker container deployment on Kubernetes cluster
-  - Systemd daemon 
+This feature simply means the system expects that at some point the pexservice could be terminated.
+To make sure the system is always up and running, we've adopted two methods of deployment.
+
+1. Deploying it as a **systemd daemon**
+2. Deploying it as a **docker container** that can be deployed in a kubernetes cluster.
+
+In this document we are focused on the systemd daemon.
 
 
 
@@ -55,6 +63,8 @@ While these instructions may work on other linux server types, I specify Ubuntu 
 ## Installation
 
 To setup as user ubuntu
+Log on to your server through terminal with the user ubuntu.
+
 
 Unzip or Gitclone this repo and run the binary to home directory of user [ubuntu]
 
@@ -67,14 +77,6 @@ RUN The following commands in your server terminal
       $ cd /home/ubuntu/pexservice/      
       $ sudo make all
 
-OR
-
-On use the docker image that could also run on Kubernetes or other Orchestration systems.
-- docker run -d -p 8081:8081  sirpros/pexservice:v1.1
-  - Keepalive for this is possible through Kubernetes cluster.
-  - Load performance on a single docker container vary depending on the docker host system capacity, requests throughput of between 560 to 9811 requests/second are achieved well for both non-write/read and write/read endpoints. 
-  The rates varies wide depending on the amount of CPU power being on host. 
-  Persistence is on container though could be modified to work with clusterwide storage.
 
 
 ## Testing with Apache Bench
@@ -86,8 +88,20 @@ On use the docker image that could also run on Kubernetes or other Orchestration
 
 
 
+## Extras
 
-## Achieving 1k requests and above. 
+
+#### Using Docker containers
+
+On use the docker image that could also run on Kubernetes or other Orchestration systems.
+- docker run -d -p 8081:8081  sirpros/pexservice:v1.1
+  - Keepalive for this is possible through Kubernetes cluster.
+  - Load performance on a single docker container vary depending on the docker host system capacity, requests throughput of between 560 to 9811 requests/second are achieved well for both non-write/read and write/read endpoints. 
+  The rates varies wide depending on the amount of CPU power being on host. 
+  Persistence is on container though could be modified to work with clusterwide storage.
+
+
+#### Achieving 1k requests and above. 
 This one is a bit tricky.
 The best way to eliminate restrictions placed by operating systems and network interfaces is to run tests from localhost.
 Or Increase the maximum number of TCP IP connections allowed in linux.
