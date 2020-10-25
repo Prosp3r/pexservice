@@ -77,12 +77,13 @@ RUN The following commands in your server terminal
 
 
 ## Testing with Apache Bench
-  + Install Apache bench
+To install Apache bench, type in the following commands on your terminal
 
         $ sudo apt install apache2-utils
         $ ab -c 10 -n 10000 -r http://localhost:8081/
 
-  The above command sends ten thousand connections at 10 concurrent connections to the / endpoint
+The second command above sends ten thousand requests at 10 concurrent requests to the / endpoint.
+You can vary the requests by changing the parameters.
 
 
 
