@@ -54,12 +54,12 @@ To setup as user ubuntu
 - Unzip or Gitclone this repo and run the binary to home directory of user [ubuntu]
 - git clone https://github.com/Prosp3r/pexservice.git
 
-RUN The following
+RUN The following commands in your server terminal
 
-     `$ sudo apt update     
+      $ sudo apt update     
       $ sudo apt install make     
       $ cd /home/ubuntu/pexservice/      
-      $ sudo make all`
+      $ sudo make all
 
 OR
 
