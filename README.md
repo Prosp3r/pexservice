@@ -81,6 +81,7 @@ RUN The following commands in your server terminal
 
 ## Testing with Apache Bench
   + Install Apache bench
+
         `$ sudo apt install apache2-utils`
         `$ ab -c 10 -n 10000 -r http://localhost:8081/`
 
