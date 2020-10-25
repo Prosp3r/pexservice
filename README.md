@@ -71,10 +71,11 @@ On use the docker image that could also run on Kubernetes or other Orchestration
 
 
 ## Testing with Apache Bench
-  - Install Apache bench
-    $ sudo apt install apache2-utils
-    $ ab -c 10 -n 10000 -r http://localhost:8081/
-  The above command sends ten thousand hits at 10 concurrent connections to the / endpoint
+  + Install Apache bench
+    + `$ sudo apt install apache2-utils`
+    + `$ ab -c 10 -n 10000 -r http://localhost:8081/`
+
+  The above command sends ten thousand connections at 10 concurrent connections to the / endpoint
 
 
 
