@@ -55,10 +55,10 @@ To setup as user ubuntu
 - git clone https://github.com/Prosp3r/pexservice.git
 
 RUN The following
-  - `$ sudo apt update`
-  - `$ sudo apt install make`
-  - `$ cd /home/ubuntu/pexservice/`
-  - `$ sudo make all`
+   `$ sudo apt update`
+   `$ sudo apt install make`
+   `$ cd /home/ubuntu/pexservice/`
+   `$ sudo make all`
 
 OR
 
