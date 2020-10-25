@@ -33,8 +33,8 @@ This API has five end points. I've describe what each endpoint does in the table
 #### Data Persistence
 Part of being resilient is expecting the worst and planning for it when designing the software.
 I decided to persist the calculations with as light a footprint as could be managed. 
-To do this, I save the calculations per time to a .csv file on the system.
-This way, in case the entire system crashes due to circumstances beyond our control all previous calculations are left intact and the system can pick up where it left off by loading the previous data from the .csv file.
+To do this, I save the calculations per time to a `.csv` file on the system.
+This way, in case the entire system crashes due to circumstances beyond our control all previous calculations are left intact and the system can pick up where it left off by loading the previous data from the `.csv` file.
 
 
 #### Keep Alive
