@@ -2,7 +2,7 @@
 
 ## Introduction
 PexService is a set of API end points designed as an example of a **resillient, high throughput** API. 
-This means it can handle a fairly substantial number of api requests in very short time and carry out all that's required of it while maintaining a fairly stable uptime on a single linux server.
+This means it can handle a fairly substantial number of api requests in very short time and carry out all that's required of it while maintaining a fairly stable uptime on minimal compute resources (a single linux server).
 
 Its goal is to showcase how a simple design implemented in Go programming language can handle complex tasks in production easily.
 
