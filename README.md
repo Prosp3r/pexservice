@@ -2,10 +2,27 @@
 
 ## Introduction
 PexService API is as an example of a resillient, high throughput API that can handle a fairly substantial number of api requests per second on a single linux server.
+Its goal is to showcase how a simple design implemented in Go programming language can handle complex task in production easily.
+
+After going through and carrying out the instructions in this document, you'll have 
++ Gotten some understanding of how key aspects of the pexservice code works.
++ Setup a simple linux server to run the pex service.
++ Installed Go.
++ Ran a simulated load test using [ApacheBench](https://httpd.apache.org/)
 
 
-## Goals
-The goal of this design is to showcase some of the capabilities of Go programming language in high load scenerio.
+## Prerequisites
++ An Ubuntu linux server or VPS.
++ Terminal access to the Ubuntu server
+
+A VPS could be gotten from any of the following.
+[Amazon AWS](https://aws.amazon.com)
+[DigitalOcean](https://digitalocean.com)
+While these instructions may work on other linux server types, I specify Ubuntu because the process has been thoroughly tested on Ubuntu(8+) linux servers.
+
+
+## 
+
 Using the fibonacci sequence challenge as example workload, pex service will carry out thousands of calculations, persists or store the results as it goes and in the case of a crash, recover, and start from where it stoped.
 
 
@@ -17,8 +34,6 @@ Using the fibonacci sequence challenge as example workload, pex service will car
   - /
   Each end point will return the curresponding fibonacci sequence for the current entry position
 
-## Requirements
-Any Linux box with Go installed
 
 ## Installation
 
