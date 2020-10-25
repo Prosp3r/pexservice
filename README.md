@@ -14,6 +14,8 @@ After going through and carrying out the instructions in this document, you woul
 
 ## How it works
 
+###### In mathematics, the [Fibonacci](https://en.wikipedia.org/wiki/Fibonacci_number) numbers, commonly denoted Fₙ, form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. 
+
 Using the fibonacci sequence challenge as example workload, pex service will carry out thousands of calculations, persists or store the results as it goes and in the case of a crash, recover, and start from where it stoped.
 
 
