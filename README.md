@@ -19,11 +19,16 @@ Using the fibonacci sequence challenge as example workload, pex service will car
 
 * This API has five end points
 
-        /current
-        /next
-        /previous
-        /reset
-        /
+<table> 
+        <tr> <td> End Point </td><td> Function </td></tr>
+        <tr> <td> / </td><td> Home endpoint - displays a description of the other end-points </td></tr>
+        <tr><td>  </td><td>  </td> </tr>
+</table>
+/current
+/next
+/previous
+/reset
+/
 
   Each end point will return the curresponding fibonacci sequence for the current entry position
 
