@@ -12,6 +12,28 @@ After going through and carrying out the instructions in this document, you woul
 + Installed Go.
 + Ran a simulated load test using [ApacheBench](https://httpd.apache.org/)
 
+## How it works
+
+Using the fibonacci sequence challenge as example workload, pex service will carry out thousands of calculations, persists or store the results as it goes and in the case of a crash, recover, and start from where it stoped.
+
+
+* This API has five end points
+  - /current
+  - /next
+  - /previous
+  - /reset
+  - /
+  Each end point will return the curresponding fibonacci sequence for the current entry position
+
+### Data Persistence
+
+
+### Keep Alive
+- KeepAlive feature is achieved with
+  - docker container deployment on Kubernetes cluster
+  - Systemd daemon 
+
+
 
 ## Prerequisites
 + An Ubuntu linux server or VPS.
@@ -25,22 +47,7 @@ A VPS could be gotten from any of the following.
 While these instructions may work on other linux server types, I specify Ubuntu because the process has been thoroughly tested on Ubuntu(8+) linux servers.
 
 
-## 
-.
-Using the fibonacci sequence challenge as example workload, pex service will carry out thousands of calculations, persists or store the results as it goes and in the case of a crash, recover, and start from where it stoped.
-
-
-* This API has five end points
-  - /current
-  - /next
-  - /previous
-  - /reset
-  - /
-  Each end point will return the curresponding fibonacci sequence for the current entry position
-
-
 ## Installation
-
 
 To setup as user ubuntu
 
@@ -63,10 +70,14 @@ On use the docker image that could also run on Kubernetes or other Orchestration
   Persistence is on container though could be modified to work with clusterwide storage.
 
 
-## Keep Alive
-- KeepAlive feature is achieved with
-  - docker container deployment on Kubernetes cluster
-  - Systemd daemon 
+## Testing with Apache Bench
+  - Install Apache bench
+    $ sudo apt install apache2-utils
+    $ ab -c 10 -n 10000 -r http://localhost:8081/
+  The above command sends ten thousand hits at 10 concurrent connections to the / endpoint
+
+
+
 
 ## Achieving 1k requests and above. 
 This one is a bit tricky.
@@ -84,10 +95,3 @@ See test_shots folder for examples screen shots of Apache bench tests.
 ![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.34.58%20PM.png)
 ![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.34.42%20PM.png)
 ![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.35.32%20PM.png)
-
-## Testing with Apache Bench
-  - Install Apache bench
-    $ sudo apt install apache2-utils
-    $ ab -c 10 -n 10000 -r http://localhost:8081/
-  The above command sends ten thousand hits at 10 concurrent connections to the / endpoint
-
