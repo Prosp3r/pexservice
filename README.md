@@ -56,10 +56,10 @@ To setup as user ubuntu
 
 RUN The following
 
-     `$ sudo apt update`     
-     `$ sudo apt install make`     
-     `$ cd /home/ubuntu/pexservice/`      
-     `$ sudo make all`
+     `$ sudo apt update     
+      $ sudo apt install make     
+      $ cd /home/ubuntu/pexservice/      
+      $ sudo make all`
 
 OR
 
