@@ -1,10 +1,12 @@
 # PEX Service 
 
 ## Introduction
-PexService API is as an example of a resillient, high throughput API that can handle a fairly substantial number of api requests per second on a single linux server.
-Its goal is to showcase how a simple design implemented in Go programming language can handle complex task in production easily.
+PexService is a set of API end points designed as an example of a **resillient, high throughput** API. 
+This means it can handle a fairly substantial number of api requests in very short time and carry out all that's required of it while maintaining a fairly stable uptime on a single linux server.
 
-After going through and carrying out the instructions in this document, you'll have 
+Its goal is to showcase how a simple design implemented in Go programming language can handle complex tasks in production easily.
+
+After going through and carrying out the instructions in this document, you would have achieved the following.
 + Gotten some understanding of how key aspects of the pexservice code works.
 + Setup a simple linux server to run the pex service.
 + Installed Go.
