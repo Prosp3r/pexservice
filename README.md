@@ -26,7 +26,7 @@ While these instructions may work on other linux server types, I specify Ubuntu 
 
 
 ## 
-
+.
 Using the fibonacci sequence challenge as example workload, pex service will carry out thousands of calculations, persists or store the results as it goes and in the case of a crash, recover, and start from where it stoped.
 
 
