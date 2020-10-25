@@ -25,10 +25,10 @@ Using the fibonacci sequence challenge as example workload, pex service will car
   - /
   Each end point will return the curresponding fibonacci sequence for the current entry position
 
-### Data Persistence
+#### Data Persistence
 
 
-### Keep Alive
+#### Keep Alive
 - KeepAlive feature is achieved with
   - docker container deployment on Kubernetes cluster
   - Systemd daemon 
