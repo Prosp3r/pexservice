@@ -51,8 +51,8 @@ While these instructions may work on other linux server types, I specify Ubuntu 
 
 To setup as user ubuntu
 
-- Unzip or Gitclone this repo and run the binary to home directory of user [ubuntu]
-- git clone https://github.com/Prosp3r/pexservice.git
+Unzip or Gitclone this repo and run the binary to home directory of user [ubuntu]
+      $ git clone https://github.com/Prosp3r/pexservice.git
 
 RUN The following commands in your server terminal
 
