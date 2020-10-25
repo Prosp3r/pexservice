@@ -21,10 +21,10 @@ Using the fibonacci sequence challenge as example workload, pex service will car
 
 <table> 
         <tr> <td> End Point </td><td> Function </td></tr>
-        <tr> <td> / </td><td> Home endpoint - displays a description of the other end-points </td></tr>
-        <tr><td> /current </td><td> current - displays the current fibonacci calculated by the service </td> </tr>
-        <tr> <td> /next </td><td> Calculates and displays the next fibonacci number relative to the current one </td></tr>
-        <tr> <td> /previous </td><td> Calculates and displays the previous fibonacci number relative to the current one </td></tr>
+        <tr> <td> / </td><td> Home endpoint - Displays a description of the other end-points </td></tr>
+        <tr><td> /current </td><td> Current - Displays the current fibonacci calculated by the service </td> </tr>
+        <tr> <td> /next </td><td> Next - Calculates and displays the next fibonacci number relative to the current one </td></tr>
+        <tr> <td> /previous </td><td> Previous - Calculates and displays the previous fibonacci number relative to the current one </td></tr>
         <tr> <td> /reset </td><td> Resets the fibonacci number calculation to the begining </td></tr>        
 </table>
 
