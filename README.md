@@ -13,7 +13,7 @@ After going through and carrying out the instructions in this document, you'll h
 
 ## Prerequisites
 + An Ubuntu linux server or VPS.
-+ Terminal access to the Ubuntu server
++ Command line prompt access to the Ubuntu server
 
 A VPS could be gotten from any of the following.
 
