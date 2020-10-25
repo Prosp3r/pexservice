@@ -19,11 +19,11 @@ Using the fibonacci sequence challenge as example workload, pex service will car
 
 * This API has five end points
 
-`/current`
-`/next`
-`/previous`
-`/reset`
-`/`
+    /current
+    /next
+    /previous
+    /reset
+    /
 
   Each end point will return the curresponding fibonacci sequence for the current entry position
 
