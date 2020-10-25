@@ -16,8 +16,10 @@ After going through and carrying out the instructions in this document, you'll h
 + Terminal access to the Ubuntu server
 
 A VPS could be gotten from any of the following.
-[Amazon AWS](https://aws.amazon.com)
-[DigitalOcean](https://digitalocean.com)
+
++ [Amazon AWS](https://aws.amazon.com)
++ [DigitalOcean](https://digitalocean.com)
+
 While these instructions may work on other linux server types, I specify Ubuntu because the process has been thoroughly tested on Ubuntu(8+) linux servers.
 
 
