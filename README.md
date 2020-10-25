@@ -52,9 +52,7 @@ In this document we are focused on the systemd daemon.
 + An Ubuntu linux server or VPS with minimum 512MiB and 1 Core CPU.
 + Command line prompt access to the Ubuntu server
 
-  ###### _A VPS could be acquired from any of the following vendors._
-  ###### + [Amazon AWS](https://aws.amazon.com)
-  ###### + [DigitalOcean](https://digitalocean.com)
+  ###### _A VPS could be acquired from any of the popular vendors like [Amazon AWS](https://aws.amazon.com), [DigitalOcean](https://digitalocean.com)_
 
 While these instructions may work on other linux server types, I specify Ubuntu because the process has been thoroughly tested on Ubuntu(8+) linux servers.
 
