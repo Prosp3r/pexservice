@@ -65,8 +65,9 @@ To make sure the system is always up and running, we've adopted two methods of d
 In this document we are focused on the systemd daemon.
 
 
+## Set up pexservice
 
-## Prerequisites
+#### Prerequisites
 + An Ubuntu linux server or VPS with minimum 512MiB and 1 Core CPU.
 + Command line prompt access to the Ubuntu server
   ###### _A VPS could be acquired from any of the popular vendors like [Amazon AWS](https://aws.amazon.com), [DigitalOcean](https://digitalocean.com)_
@@ -75,7 +76,7 @@ In this document we are focused on the systemd daemon.
 _While these instructions may work on other linux server types, I specify Ubuntu because the process has been thoroughly tested on Ubuntu(8+) linux servers._
 
 
-## Installation
+#### Installation
 
 To setup as user ubuntu
 Log on to your server through terminal with the user ubuntu.
@@ -94,7 +95,7 @@ RUN The following commands in your server terminal
 
 
 
-## Testing with Apache Bench
+#### Testing with Apache Bench
 To install Apache bench, type in the following commands on your terminal
 
         $ sudo apt install apache2-utils
