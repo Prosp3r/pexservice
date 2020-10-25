@@ -7,7 +7,7 @@ This means it can handle a fairly substantial number of api requests in very sho
 Its goal is to showcase how a simple design implemented in Go programming language can handle complex tasks in production easily.
 
 After going through and carrying out the instructions in this document, you would have achieved the following.
-+ Gotten some understanding of how key aspects of the pexservice code works.
++ Gained some understanding of how key aspects of the pexservice code works.
 + Setup a simple linux server to run the pex service.
 + Installed Go.
 + Ran a simulated load test using [ApacheBench](https://httpd.apache.org/)
@@ -82,8 +82,8 @@ RUN The following commands in your server terminal
 ## Testing with Apache Bench
   + Install Apache bench
 
-        `$ sudo apt install apache2-utils`
-        `$ ab -c 10 -n 10000 -r http://localhost:8081/`
+        $ sudo apt install apache2-utils
+        $ ab -c 10 -n 10000 -r http://localhost:8081/
 
   The above command sends ten thousand connections at 10 concurrent connections to the / endpoint
 
@@ -94,8 +94,10 @@ RUN The following commands in your server terminal
 
 #### Using Docker containers
 
-On use the docker image that could also run on Kubernetes or other Orchestration systems.
-- docker run -d -p 8081:8081  sirpros/pexservice:v1.1
+To use the docker image that could also run on Kubernetes or other orchestration systems, run the following command on your terminal.
+
+        $ docker run -d -p 8081:8081  sirpros/pexservice:v1.1
+        
   - Keepalive for this is possible through Kubernetes cluster.
   - Load performance on a single docker container vary depending on the docker host system capacity, requests throughput of between 560 to 9811 requests/second are achieved well for both non-write/read and write/read endpoints. 
   The rates varies wide depending on the amount of CPU power being on host. 
