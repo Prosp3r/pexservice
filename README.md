@@ -36,7 +36,7 @@ This API has five end points. I've describe what each endpoint does in the table
 ![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/pex_inaction.png)
 
 
-In the illustration above, points 1,2 and 3 are executed at the start of the system, point 4 is triggered by requests made on the API endpoint with write capabilities.
+In the illustration above, points 1, 2 and 3 are executed at the start of the system, point 4 is triggered by requests made on the API endpoint with read/write capabilities.
 
 1. When the service is started, it reads the previous calculations from the `.csv` file store and sets it in memory.
 2. It then starts a Go routine that keeps updateing the `.csv` store with changes to the in-memory store independent of the main program.
