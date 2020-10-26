@@ -98,7 +98,7 @@ RUN The following commands in your server terminal
 
 
 
-#### Testing with Apache Bench
+#### Load testing with Apache Bench
 To install Apache bench, type in the following commands on your terminal
 
         $ sudo apt install apache2-utils
