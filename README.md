@@ -93,13 +93,11 @@ You can confirm that you have installed Git correctly by running the following c
 
         $ git --version
 
-
-
-
+.  
         Output 
         git version 2.18.0
 
-
+        
 Unzip or Gitclone this repo and run the binary to home directory of user [ubuntu]
 
        $ git clone https://github.com/Prosp3r/pexservice.git
