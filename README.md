@@ -160,7 +160,7 @@ Whatever category your desired contribution fall into, here's a simple guide for
 
 #### Pointing out something quickly
 
-For people who don't have the time or for some reason are unable to make a code contribution themselves,  or if you just want to make a suggestion, please use the "Issues" link at the top of this document.
+For people who don't have the time or for some reason are unable to make a code contribution themselves, or if you just want to make a suggestion, please use the "Issues" link at the top of this document.
 
 ![Click to view issues](https://github.com/Prosp3r/pexservice/blob/master/test_shots/pex_art_issues.fw.png)
 
