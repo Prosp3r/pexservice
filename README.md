@@ -158,9 +158,9 @@ We always welcome contributions in various forms.
 Your contributions could be in form of pointing out errors or actually contributing some code updates.
 Whatever category your desired contribution fall into, here's a simple guide for making that impact quickly.
 
-#### Pointing out something
+#### Pointing out something quickly
 
-1. For people who don't have the time or for some reason are unable to make a code contribution themselves, please use the "Issues" link at the top of this document.
+For people who don't have the time or for some reason are unable to make a code contribution themselves, please use the "Issues" link at the top of this document.
 
  + ![Click to view issues](https://github.com/Prosp3r/pexservice/blob/master/test_shots/pex_art_issues.fw.png)
 
