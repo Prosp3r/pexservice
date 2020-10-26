@@ -21,6 +21,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/JohnCGriffin/overflow"
 	"github.com/gorilla/mux"
 )
 
@@ -96,10 +97,15 @@ func fibonacciGo() (uint64, error) {
 		newNext = newCurrent + newPrevious
 	} else {
 
-		newPrevious = FiboStore["Current"]
-		newCurrent = FiboStore["Next"]
-		newNext = newCurrent + newPrevious
-		newPosition = FiboStore["Position"] + 1
+		_, ok := overflow.Add(FiboStore["Current"], FiboStore["Next"])
+		if ok == false {
+			//IntegerOverflow
+		} else {
+			newPrevious = FiboStore["Current"]
+			newCurrent = FiboStore["Next"]
+			newNext = newCurrent + newPrevious
+			newPosition = FiboStore["Position"] + 1
+		}
 	}
 
 	//for {
