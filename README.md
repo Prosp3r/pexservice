@@ -154,13 +154,15 @@ To use the docker image that could also run on Kubernetes or other orchestration
 
 
 ## Contributing
-
+We always welcome contributions in various forms.
+Your contributions could be in form of pointing out errors or actually contributing some code updates.
+Whatever category your desired contribution fall into, here's a simple guide for making that impact quickly.
 
 
 
 ## Conclusion
 
-[Go(Golang)](https://golang.org) is a very powerful language for developing systems that can handle fiarly large amount of work loads.
-It concurrency features can enable developers design very efficient systems with near unlimited capability with little system resource footprints.
+[Go(Golang)](https://golang.org) is a very powerful, feature packed programming language for developing systems that can handle fiarly large amount of work loads.
+It concurrency features particularly, can enable developers design very efficient systems with near unlimited capability with little system resource footprints.
 
-If you've ever contemplated learning a new language, give Go a try.
+If you've are contemplating learning a new language for the long term, give Go a try.
