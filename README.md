@@ -126,7 +126,9 @@ Run the following command to install Apachebench:
 The second command above sends ten thousand requests at 10 concurrent requests to the / endpoint.
 You can vary the requests by changing the parameters.
 
-We tested the service on a variety of systems and here are some results we got.
+#### Our results
+
+WHen we tested the service on a variety of systems, here are some results we got.
 
 <table> 
         <tr><td> System configuration </td><td> Our Result </td><td> Screen Shot </td>  </tr>
