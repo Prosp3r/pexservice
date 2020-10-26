@@ -160,7 +160,7 @@ To use the docker image that could also run on Kubernetes or other orchestration
 
 ## Conclusion
 
-Go(Golang) is a very powerful language for developing systems that can handle fiarly large amount of work loads.
+[Go(Golang)](https://golang.org) is a very powerful language for developing systems that can handle fiarly large amount of work loads.
 It concurrency features can enable developers design very efficient systems with near unlimited capability with little system resource footprints.
 
 If you've ever contemplated learning a new language, give Go a try.
