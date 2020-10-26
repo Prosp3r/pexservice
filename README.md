@@ -68,7 +68,7 @@ To make sure the system is always up and running, we've adopted two methods of d
 In this document we are focused on the systemd daemon.
 
 
-## Set up pexservice
+## Setting up pexservice
 
 #### Prerequisites
 + An Ubuntu linux server or VPS with minimum 512MiB and 1 Core CPU.
