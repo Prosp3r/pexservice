@@ -130,7 +130,9 @@ We tested the service on a variety of systems and here are some results we got.
 
 <table> 
         <tr><td> System configuration </td><td> Our Result </td>  </tr>
-        <tr><td> AWS x86 Ubuntu 8.x (512MiB, 1 Core) </td><td>  </td>  </tr>
+        <tr><td> AWS x86 Ubuntu 8.x (512MiB, 1 Core) </td><td> ![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.35.32%20PM.png) </td>  </tr>
+        <tr><td> DigitalOcean x86 Ubuntu 8.x (4000MiB, 4 Core) </td><td>  ![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.34.58%20PM.png)  </td>  </tr>
+        
 </table>
 
 
