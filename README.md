@@ -130,7 +130,7 @@ We tested the service on a variety of systems and here are some results we got.
 
 <table> 
         <tr><td> System configuration </td><td> Our Result </td>  </tr>
-        <tr><td>  </td><td> Our Result </td>  </tr>
+        <tr><td> AWS x86 Ubuntu 8.x (512MiB, 1 Core) </td><td>  </td>  </tr>
 </table>
 
 
