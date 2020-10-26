@@ -85,6 +85,21 @@ To setup as user ubuntu
 Log on to your server through terminal with the user ubuntu.
 
 
+       $ cd ~
+       $ sudo apt update
+       $ sudo apt install git
+
+You can confirm that you have installed Git correctly by running the following command:
+
+        $ git --version
+
+
+
+
+        Output 
+        git version 2.18.0
+
+
 Unzip or Gitclone this repo and run the binary to home directory of user [ubuntu]
 
        $ git clone https://github.com/Prosp3r/pexservice.git
