@@ -131,7 +131,7 @@ We tested the service on a variety of systems and here are some results we got.
 <table> 
         <tr><td> System configuration </td><td> Our Result </td>  </tr>
         <tr><td> AWS x86 Ubuntu 8.x (512MiB, 1 Core) </td><td> 9061.91 [#/sec], Avg time per request 0.110[ms] </td>  </tr>
-        <tr><td> DigitalOcean x86 Ubuntu 8.x (4000MiB, 4 Core) </td><td> 9061.91 [#/sec], Avg time per request 0.110[ms] </td>  </tr>
+        <tr><td> DigitalOcean x86 Ubuntu 8.x (4000MiB, 4 Core) </td><td> 9811.24 [Requests/sec], Avg time per request 0.102[ms] </td>  </tr>
         
 </table>
 
