@@ -93,7 +93,8 @@ You can confirm that you have installed Git correctly by running the following c
 
         $ git --version
 
-.  
+. 
+
         Output 
         git version 2.18.0
 
