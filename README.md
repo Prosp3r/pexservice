@@ -162,9 +162,9 @@ Whatever category your desired contribution fall into, here's a simple guide for
 
 1. For people who don't have the time or for some reason are unable to make a code contribution themselves, please use the "Issues" link at the top of this document.
 
- + ![Click to view issues](https://github.com/Prosp3r/pexservice/blob/master/test_shots/pex_inaction.png)
+ + ![Click to view issues](https://github.com/Prosp3r/pexservice/blob/master/test_shots/pex_art_issues.fw.png)
 
- + ![Click to open new a issue](https://github.com/Prosp3r/pexservice/blob/master/test_shots/pex_inaction.png)
+ + ![Click to open new a issue](https://github.com/Prosp3r/pexservice/blob/master/test_shots/pex_art_newissues.fw.png)
 
 Fill the new issue form and we'll take it from there.
 
