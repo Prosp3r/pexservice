@@ -105,7 +105,7 @@ Clone this repository to your local directory using the follwing command:
        $ git clone https://github.com/Prosp3r/pexservice.git
 
 Our deployment uses the make utility to carry out some of the important installations needed to get the system up and running.
-The following commands will install [GNU Make](https://www.gnu.org/software/make/) and setup the [Go](https://golang.org/) environment needed for pexservice to run and starts the pexservice as a **system service** all at the same time.
+The following commands will install [GNU Make](https://www.gnu.org/software/make/) and setup the [Go](https://golang.org/) environment needed for pexservice to run and starts the pexservice as a [**system service**](http://manpages.ubuntu.com/manpages/bionic/man5/systemd.service.5.html) all at the same time.
 
       
       $ sudo apt install make     
