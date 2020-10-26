@@ -92,6 +92,7 @@ Log on to your server through terminal with the user ubuntu.
 You can confirm that you have installed Git correctly by running the following command:
 
         $ git --version
+ 
 
 . 
 
@@ -99,13 +100,13 @@ You can confirm that you have installed Git correctly by running the following c
         git version 2.18.0
 
         
-Unzip or Gitclone this repo and run the binary to home directory of user [ubuntu]
+Clone this repository to your local directory using the follwing command:
 
        $ git clone https://github.com/Prosp3r/pexservice.git
 
-RUN The following commands in your server terminal
-
-      $ sudo apt update     
+Our deployment uses the make utility to carry out some of the important installations needed to get the system up and running.
+The following commands will install [GNU Make](https://www.gnu.org/software/make/) and setup the [Go](https://golang.org/) environment needed for pexservice to run and starts the pexservice as a **system service** all at the same time.
+      
       $ sudo apt install make     
       $ cd /home/ubuntu/pexservice/      
       $ sudo make all
