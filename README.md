@@ -153,19 +153,14 @@ To use the docker image that could also run on Kubernetes or other orchestration
   Persistence is on container though could be modified to work with clusterwide storage.
 
 
-#### Achieving 1k requests and above. 
-This one is a bit tricky.
-The best way to eliminate restrictions placed by operating systems and network interfaces is to run tests from localhost.
-Or Increase the maximum number of TCP IP connections allowed in linux.
+## Contributing
 
 
-Included are various screenshots of Apache bench tests.
-On 512MiB Ram 1 CPU on AWS without restrictions on Packet rates, this API's throughput was 4511/requests per second with zero errors on read/write endpoint.
-On DigitalOcean with 8GB Ram and 4 CPUS it handled 8492 requests per secodn with zero error on read/write endpoint.
-Results are significantly better but vary on non write end points.
 
-See test_shots folder for examples screen shots of Apache bench tests.
 
-![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.34.58%20PM.png)
-![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.34.42%20PM.png)
-![alt text](https://github.com/Prosp3r/pexservice/blob/master/test_shots/Screen%20Shot%202020-09-29%20at%205.35.32%20PM.png)
+## Conclusion
+
+Go(Golang) is a very powerful language for developing systems that can handle fiarly large amount of work loads.
+It concurrency features can enable developers design very efficient systems with near unlimited capability with little system resource footprints.
+
+If you've ever contemplated learning a new language, give Go a try.
