@@ -178,6 +178,6 @@ For people who feel confident about contributing documentation and code improvem
 ## Conclusion
 
 [Go(Golang)](https://golang.org) is a very powerful, feature packed programming language for developing systems that can handle fairly large amount of work loads.
-It concurrency features particularly, can enable developers design very efficient systems with near unlimited capability with little system resource footprints.
+Its concurrency features particularly, can enable developers design very efficient systems with near unlimited capability with little system resource footprints.
 
 If you've are contemplating learning a new language for the long term, give [Go](https://golang.org) a try.
