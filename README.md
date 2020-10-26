@@ -114,8 +114,11 @@ The following commands will install [GNU Make](https://www.gnu.org/software/make
 
 
 
-#### Load testing with Apache Bench
-To install Apache bench, type in the following commands on your terminal
+## Load testing with Apache Bench
+To test the ability of our service to handle large amount of connections in fiarly short time, we will be using [Apache Bench](https://httpd.apache.org/docs/2.4/programs/ab.html) utility which comes installed by default in some operating systems. 
+We will need to install it on our server however.
+
+Run the following command to install Apachebench: 
 
         $ sudo apt install apache2-utils
         $ ab -c 10 -n 10000 -r http://localhost:8081/
@@ -123,6 +126,12 @@ To install Apache bench, type in the following commands on your terminal
 The second command above sends ten thousand requests at 10 concurrent requests to the / endpoint.
 You can vary the requests by changing the parameters.
 
+We tested the service on a variety of systems and here are some results we got.
+
+<table> 
+        <tr><td> System configuration </td><td> Our Result </td>  </tr>
+        <tr><td>  </td><td> Our Result </td>  </tr>
+</table>
 
 
 ## Extras
