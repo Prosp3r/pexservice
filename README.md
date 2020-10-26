@@ -169,6 +169,12 @@ For people who don't have the time or for some reason are unable to make a code 
 Fill the new issue form and we'll take it from there.
 
 
+#### Contributing code and documentation
+For people who feel confident about contributing documentation and code improvements, even if you're new to contributing, please follow the guide in this short [video](https://www.youtube.com/watch?v=waEb2c9NDL8).
+
+
+
+
 ## Conclusion
 
 [Go(Golang)](https://golang.org) is a very powerful, feature packed programming language for developing systems that can handle fairly large amount of work loads.
