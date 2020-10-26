@@ -106,6 +106,7 @@ Clone this repository to your local directory using the follwing command:
 
 Our deployment uses the make utility to carry out some of the important installations needed to get the system up and running.
 The following commands will install [GNU Make](https://www.gnu.org/software/make/) and setup the [Go](https://golang.org/) environment needed for pexservice to run and starts the pexservice as a **system service** all at the same time.
+
       
       $ sudo apt install make     
       $ cd /home/ubuntu/pexservice/      
