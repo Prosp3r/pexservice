@@ -21,7 +21,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/badger"
+	"github.com/dgraph-io/badger"
 	"github.com/gorilla/mux"
 )
 
