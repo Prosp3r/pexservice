@@ -202,16 +202,12 @@ func basicRateHandler() { /*TODO*/ }
 func badgerdb() *badger.DB {
 	db, err := badger.Open(badger.DefaultOptions("./datastore/badger"))
 	failOnError(err, "Could not connect to badger")
-	defer db.Close()
+	//defer db.Close()
 	return db
 }
 
 //save sequence to file
 func saveFibo() {
-
-	/*INITIATE BADGER*/
-	bdb := badgerdb()
-	txn := bdb.NewTransaction(true)
 
 	//fmt.Println("Asked to save")
 	filename := "fibo.csv"
@@ -228,13 +224,19 @@ func saveFibo() {
 
 		//HANDLE BADGER OPERATIONS
 		//::::::::::::::::::::::::save to badger key value store::::::::
+		/*INITIATE BADGER*/
+		bdb := badgerdb()
+
+		txn := bdb.NewTransaction(true)
+		defer txn.Discard()
+
 		ibyte := strconv.FormatUint(f["Hitcount"], 10)
-		if err := txn.Set([]byte(ibyte), output); err == badger.ErrTxnTooBig {
-			_ = txn.Commit()
-			txn = bdb.NewTransaction(true)
-			_ = txn.Set([]byte(ibyte), output)
-		}
-		_ = txn.Commit()
+		err := txn.Set([]byte(ibyte), output)
+		failOnError(err, "Could not save to badger")
+
+		errx := txn.Commit()
+		failOnError(errx, "Could not save to badger")
+		bdb.Close()
 		//::::::::::::::::::::::::
 		//END OF BADGER OPERATIONS
 
