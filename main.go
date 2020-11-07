@@ -21,6 +21,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/badger"
 	"github.com/gorilla/mux"
 )
 
@@ -196,8 +197,22 @@ func homepage(w http.ResponseWriter, r *http.Request) {
 //basicRateHandler - could be implemented as a rate limiter with parameters set on server startup or pre-set default.
 func basicRateHandler() { /*TODO*/ }
 
+//badgerdb - connect to badger keyValue store
+//return - a pointer to badger DB connection
+func badgerdb() *badger.DB {
+	db, err := badger.Open(badger.DefaultOptions("./datastore/badger"))
+	failOnError(err, "Could not connect to badger")
+	defer db.Close()
+	return db
+}
+
 //save sequence to file
 func saveFibo() {
+
+	/*INITIATE BADGER*/
+	bdb := badgerdb()
+	txn := bdb.NewTransaction(true)
+
 	//fmt.Println("Asked to save")
 	filename := "fibo.csv"
 	fmt.Printf("Saving fibonacci state to %v \n", filename)
@@ -210,6 +225,19 @@ func saveFibo() {
 		xrecordString := strconv.FormatUint(f["Hitcount"], 10) + "," + strconv.FormatUint(f["Position"], 10) + "," + strconv.FormatUint(f["Previous"], 10) + "," + strconv.FormatUint(f["Current"], 10) + "," + strconv.FormatUint(f["Next"], 10)
 
 		output := []byte(xrecordString)
+
+		//HANDLE BADGER OPERATIONS
+		//::::::::::::::::::::::::save to badger key value store::::::::
+		ibyte := strconv.FormatUint(f["Hitcount"], 10)
+		if err := txn.Set([]byte(ibyte), output); err == badger.ErrTxnTooBig {
+			_ = txn.Commit()
+			txn = bdb.NewTransaction(true)
+			_ = txn.Set([]byte(ibyte), output)
+		}
+		_ = txn.Commit()
+		//::::::::::::::::::::::::
+		//END OF BADGER OPERATIONS
+
 		mutex.Lock()
 		openFile, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY, 0644)
 		failOnError(err, "An error was encountered saving fibo to file")
