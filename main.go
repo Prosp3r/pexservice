@@ -21,7 +21,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dgraph-io/badger"
 	"github.com/gorilla/mux"
 )
 
@@ -197,15 +196,6 @@ func homepage(w http.ResponseWriter, r *http.Request) {
 //basicRateHandler - could be implemented as a rate limiter with parameters set on server startup or pre-set default.
 func basicRateHandler() { /*TODO*/ }
 
-//badgerdb - connect to badger keyValue store
-//return - a pointer to badger DB connection
-func badgerdb() *badger.DB {
-	db, err := badger.Open(badger.DefaultOptions("./datastore/badger"))
-	failOnError(err, "Could not connect to badger")
-	//defer db.Close()
-	return db
-}
-
 //save sequence to file
 func saveFibo() {
 
@@ -221,24 +211,6 @@ func saveFibo() {
 		xrecordString := strconv.FormatUint(f["Hitcount"], 10) + "," + strconv.FormatUint(f["Position"], 10) + "," + strconv.FormatUint(f["Previous"], 10) + "," + strconv.FormatUint(f["Current"], 10) + "," + strconv.FormatUint(f["Next"], 10)
 
 		output := []byte(xrecordString)
-
-		//HANDLE BADGER OPERATIONS
-		//::::::::::::::::::::::::save to badger key value store::::::::
-		/*INITIATE BADGER*/
-		bdb := badgerdb()
-
-		txn := bdb.NewTransaction(true)
-		defer txn.Discard()
-
-		ibyte := strconv.FormatUint(f["Hitcount"], 10)
-		err := txn.Set([]byte(ibyte), output)
-		failOnError(err, "Could not save to badger")
-
-		errx := txn.Commit()
-		failOnError(errx, "Could not save to badger")
-		bdb.Close()
-		//::::::::::::::::::::::::
-		//END OF BADGER OPERATIONS
 
 		mutex.Lock()
 		openFile, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY, 0644)
